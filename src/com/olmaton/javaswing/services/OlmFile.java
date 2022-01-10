@@ -2,6 +2,7 @@ package com.olmaton.javaswing.services;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -67,5 +68,10 @@ public class OlmFile {
                 }
             }
         }
+    }
+    
+    public static boolean isExist(String path) {
+        File archivo = new File(path);
+        return archivo.exists();
     }
 }

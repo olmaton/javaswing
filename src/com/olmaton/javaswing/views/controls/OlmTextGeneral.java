@@ -87,6 +87,12 @@ public class OlmTextGeneral extends JTextField implements KeyListener, FocusList
         setForeground(OlmColors.getTextoGeneral());
         setBorder(new LineBorder(OlmColors.getBordeTexto()));
 
+        if (minTextLength == maxTextLength && getText().trim().length() != maxTextLength) {
+            setForeground(OlmColors.getAlert3Dark(230));
+            setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
+            return "Ingrese " + minTextLength + " caracteres en el campo: " + getName() + ".";
+        }
+
         if (getText().trim().length() < minTextLength) {
             setForeground(OlmColors.getAlert3Dark(230));
             setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
@@ -98,7 +104,7 @@ public class OlmTextGeneral extends JTextField implements KeyListener, FocusList
             setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
             return "Ingrese como máximo " + maxTextLength + " caracteres en el campo: " + getName() + ".";
         }
-        
+
         return null;
     }
 
@@ -111,7 +117,9 @@ public class OlmTextGeneral extends JTextField implements KeyListener, FocusList
 
     @Override
     public void keyTyped(KeyEvent e) {
-
+        if (getText().length() >= maxTextLength) {
+            e.consume();
+        }
     }
 
     @Override
@@ -134,6 +142,9 @@ public class OlmTextGeneral extends JTextField implements KeyListener, FocusList
     @Override
     public void focusLost(FocusEvent e) {
         getErrors();
+        if (getText().length() > maxTextLength) {
+            setText(getText().substring(0, maxTextLength));
+        }
     }
 
 //    public boolean isValidateEmpty() {
@@ -157,6 +168,11 @@ public class OlmTextGeneral extends JTextField implements KeyListener, FocusList
 
     public void setMaxTextLength(int maxTextLength) {
         this.maxTextLength = maxTextLength;
+    }
+
+    public void setTextLenght(int textLength) {
+        maxTextLength = textLength;
+        minTextLength = textLength;
     }
 
 }
