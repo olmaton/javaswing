@@ -25,11 +25,15 @@ public class DialogMessage {
 
     public void setMessage(Component component, MessageLevel level, String message, String origin) {
         Frame parent = (JFrame) SwingUtilities.getWindowAncestor(component);
+        if (component instanceof Frame) {
+            parent = (Frame) component;
+        }
         switch (level) {
             case EXITO: {
                 //Mensaje OK
                 JdiMessage jdiMessage = new JdiMessage(parent);
                 jdiMessage.setLabelTitle("Mensaje", message, origin, OlmColors.getAlert0(), OlmColors.getAlert0Dark());
+                jdiMessage.setLocationRelativeTo(component);
                 jdiMessage.setVisible(true);
                 break;
             }
@@ -38,6 +42,7 @@ public class DialogMessage {
                 //Mensaje informativo
                 JdiMessage jdiMessage = new JdiMessage(parent);
                 jdiMessage.setLabelTitle("Mensaje", message, origin, OlmColors.getAlert1(), OlmColors.getAlert1Dark());
+                jdiMessage.setLocationRelativeTo(component);
                 jdiMessage.setVisible(true);
                 break;
             }
@@ -46,6 +51,7 @@ public class DialogMessage {
                 //Mensaje de alerta
                 JdiMessage jdiMessage = new JdiMessage(parent);
                 jdiMessage.setLabelTitle("Alerta", message, origin, OlmColors.getAlert2(), OlmColors.getAlert2Dark());
+                jdiMessage.setLocationRelativeTo(component);
                 jdiMessage.setVisible(true);
                 break;
             }
@@ -54,6 +60,7 @@ public class DialogMessage {
                 //Mensaje de error
                 JdiMessage jdiMessage = new JdiMessage(parent);
                 jdiMessage.setLabelTitle("Error", message, origin, OlmColors.getAlert3(), OlmColors.getAlert3Dark());
+                jdiMessage.setLocationRelativeTo(component);
                 jdiMessage.setVisible(true);
                 break;
             }
@@ -61,6 +68,7 @@ public class DialogMessage {
             default: {
                 JdiMessage jdiMessage = new JdiMessage(parent);
                 jdiMessage.setLabelTitle("Mensaje", message, origin, OlmColors.getAlert1(), OlmColors.getAlert1Dark());
+                jdiMessage.setLocationRelativeTo(component);
                 jdiMessage.setVisible(true);
             }
         }
@@ -68,8 +76,12 @@ public class DialogMessage {
 
     public boolean isAcepted(Component component, String mensaje) {
         Frame parent = (JFrame) SwingUtilities.getWindowAncestor(component);
+        if (component instanceof Frame) {
+            parent = (Frame) component;
+        }
         JdiMessageConfirm jdiMessageConfirmar = new JdiMessageConfirm(parent);
         jdiMessageConfirmar.setLabelTitle("Confirme", mensaje, new Color(93, 164, 236));
+        jdiMessageConfirmar.setLocationRelativeTo(component);
         jdiMessageConfirmar.setVisible(true);
         return jdiMessageConfirmar.isConfirmado();
     }
