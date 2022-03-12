@@ -5,14 +5,21 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class OlmCustomJTable {
 
-    private static final int ROW_HEIGHT = 30;
-    private static final int ROW_BUTTON_SIZE = 20;
+    private int ROW_HEIGHT = 30;
 
     private final JTable table;
-    private final DefaultTableModel dtm = new DefaultTableModel();
+//    private final OlmTableModel dtm = new OlmTableModel();
+    private final DefaultTableModel dtm = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            Object value = getValueAt(row, column);
+            return value == null || (value instanceof Boolean);
+        }
+    };
 
     public OlmCustomJTable(JTable table, OlmJTableHead modelo) {
         this.table = table;
@@ -27,8 +34,8 @@ public class OlmCustomJTable {
         this.table.setRowHeight(ROW_HEIGHT);
         dtm.setColumnIdentifiers(modelo.getHead());
         this.table.setModel(dtm);
-        this.init(modelo.getSizeWith());
         this.table.setDefaultRenderer(Object.class, render);
+        this.init(modelo.getSizeWith());
     }
 
     private void init(int sizeWith[]) {
@@ -42,10 +49,10 @@ public class OlmCustomJTable {
     }
 
     public void hideColumn(int i) {
-        this.table.getColumnModel().getColumn(i).setPreferredWidth(0);
-        this.table.getColumnModel().getColumn(i).setMaxWidth(0);
-        this.table.getColumnModel().getColumn(i).setMinWidth(0);
-        this.table.getColumnModel().getColumn(i).setWidth(0);
+        table.getColumnModel().getColumn(i).setMaxWidth(0);
+        table.getColumnModel().getColumn(i).setMinWidth(0);
+        table.getColumnModel().getColumn(i).setWidth(0);
+        table.getColumnModel().getColumn(i).setPreferredWidth(0);
     }
 
     public JButton addButton(int idx, String icon) {
@@ -61,13 +68,12 @@ public class OlmCustomJTable {
 
     public JCheckBox addCheckBox(int column) {
         CheckBoxEditor buttonEditor = new CheckBoxEditor(new JCheckBox());
-
         table.getColumnModel().getColumn(column).setCellEditor(buttonEditor);
         table.getColumnModel().getColumn(column).setCellRenderer(new CheckBoxRender());
         return buttonEditor.checkBox;
     }
 
-    public DefaultTableModel getDefaultTableModel() {
+    public TableModel getDefaultTableModel() {
         return dtm;
     }
 
