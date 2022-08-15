@@ -3,7 +3,7 @@ package com.olmaton.javaswing.services;
 public enum MessageLevel {
     EXITO(0, "Mensaje"),
     MENSAJE(1, "Mensaje"),
-    ADVERTENCIA(2, "Advertencia"),
+    WARNING(2, "Advertencia"),
     ERROR(2, "Error");
 
     private final int level;

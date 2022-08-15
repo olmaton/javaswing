@@ -14,7 +14,7 @@ public class ButtonEditor extends DefaultCellEditor {
         button.setPressedIcon(presedIcon);
         button.setRolloverIcon(presedIcon);
         button.setContentAreaFilled(true);
-        button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+//        button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         button.setFocusPainted(false);
     }
 

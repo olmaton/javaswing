@@ -47,7 +47,7 @@ public class DialogMessage {
                 break;
             }
 
-            case ADVERTENCIA: {
+            case WARNING: {
                 //Mensaje de alerta
                 JdiMessage jdiMessage = new JdiMessage(parent);
                 jdiMessage.setLabelTitle("Alerta", message, origin, OlmColors.getAlert2(), OlmColors.getAlert2Dark());
