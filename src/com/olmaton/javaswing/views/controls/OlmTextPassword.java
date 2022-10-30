@@ -46,7 +46,7 @@ public class OlmTextPassword extends JPasswordField implements KeyListener, Focu
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                textValid = (getText().length() <= 0);
+                textValid = (getPassword().length <= 0);
             }
 
             @Override
@@ -59,13 +59,13 @@ public class OlmTextPassword extends JPasswordField implements KeyListener, Focu
         setForeground(OlmColors.getTextoGeneral());
         setBorder(new LineBorder(OlmColors.getBordeTexto()));
 
-        if (getText().trim().length() < minTextLength) {
+        if (getPassword().length < minTextLength) {
             setForeground(OlmColors.getAlert3Dark(230));
             setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
             return "Ingrese por lo menos " + minTextLength + " caracteres en el campo "+getName()+".";
         }
 
-        if (getText().trim().length() > maxTextLength) {
+        if (getPassword().length > maxTextLength) {
             setForeground(OlmColors.getAlert3Dark(230));
             setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
             return "Ingrese como máximo " + maxTextLength + " caracteres en el campo "+getName()+".";
