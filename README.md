@@ -1,5 +1,7 @@
 # Olmaton Java Swing Library
 ![alt text](https://github.com/olmaton/javaswing/blob/main/images/example.png?raw=true)
+![alt text](https://github.com/olmaton/javaswing/blob/main/images/dialog-and-validation.png?raw=true)
+
 
 Simple library for java swing controls:
 ## Technologies
