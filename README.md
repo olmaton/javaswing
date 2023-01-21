@@ -1,10 +1,30 @@
-# javaswing
+# Olmaton Java Swing Library
+![alt text](https://github.com/olmaton/javaswing/blob/main/images/example.png?raw=true)
 
 Simple library for java swing controls:
+## Technologies
+- Netbeans 8.2
+- Java 8
 
-- Text with placeholder
+## Buttons
+- Primary
+- Secondary
+
+## Text control
 - Email text
-- Min max text
+- Decimal text
+- Integer text
+- General text
+- Password text
+
+### Validations and more
+- Placeholder
+- Get errors
+- Min max text length
 - Text number validation
 - Text decimal validation
-- Simple buttons: primary and secondary
+
+## Tables
+- Easy tables
+- Custom colors
+- Buttons
