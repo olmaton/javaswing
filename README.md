@@ -2,6 +2,9 @@
 ![alt text](https://github.com/olmaton/javaswing/blob/main/images/example.png?raw=true)
 
 Simple library for java swing controls:
+## Technologies
+- Netbeans 8.2
+- Java 8
 
 ## Buttons
 - Primary
