@@ -67,7 +67,7 @@ public class OlmTextPassword extends JPasswordField implements KeyListener, Focu
         setForeground(OlmColors.getTextoGeneral());
         setBorder(new LineBorder(OlmColors.getBordeTexto()));
 
-        Matcher mat = patternPassword.matcher(getText());
+        Matcher mat = patternPassword.matcher(String.valueOf(getPassword()));
         if (!mat.find()) {
             setForeground(OlmColors.getAlert3Dark(230));
             setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
