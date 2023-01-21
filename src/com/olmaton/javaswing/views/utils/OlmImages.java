@@ -13,7 +13,8 @@ public class OlmImages {
     }
 
     public static ImageIcon getImageIcon(String path) {
-        ImageIcon imgIcon = new ImageIcon(FileSystems.getDefault().getPath(path).toAbsolutePath().toString());
+        String url = FileSystems.getDefault().getPath(path).toAbsolutePath().toString();
+        ImageIcon imgIcon = new ImageIcon(url);
         return imgIcon;
     }
 

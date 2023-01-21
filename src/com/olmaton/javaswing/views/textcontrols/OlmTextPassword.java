@@ -1,43 +1,49 @@
-package com.olmaton.javaswing.views.controls;
+package com.olmaton.javaswing.views.textcontrols;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import com.olmaton.javaswing.views.utils.OlmColors;
+import java.awt.Color;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author olmaton
  */
-public class OlmTextGeneral extends JTextField implements KeyListener, FocusListener {
+public class OlmTextPassword extends JPasswordField implements KeyListener, FocusListener {
 
     private final Dimension dimension = new Dimension(150, 30);
-//    private final Color placeholderColor = Color.BLACK;
-    private String placeholder = "Olm General Text";
+    private String placeholder = "";
     private boolean textValid = true;
     private boolean autoSelectOnFocus = true;
-//    private boolean validateEmpty = false;
     private int minTextLength = 0;
     private int maxTextLength = 999999999;
 
-    public OlmTextGeneral() {
+    Pattern patternPassword = Pattern.compile(".");
+    private String alertTextWhenPatternError = "%s not containt password format valid.";
+    private String alertTextWhenMinTextLengthError = "%s is required with min text length %s.";
+    private String alertTextWhenMaxTextLengthError = "%s is required with max text length %s.";
+
+    public OlmTextPassword() {
         super();
+        setName("OlmTextPassword");
         setSize(dimension);
         setText("");
         setPreferredSize(dimension);
         setMinimumSize(dimension);
         setMaximumSize(dimension);
         setVisible(true);
-        addKeyListener(OlmTextGeneral.this);
-        addFocusListener(OlmTextGeneral.this);
+        addKeyListener(OlmTextPassword.this);
+        addFocusListener(OlmTextPassword.this);
         setForeground(OlmColors.getTextoGeneral());
         setBorder(new LineBorder(OlmColors.getBordeTexto()));
         getDocument().addDocumentListener(new DocumentListener() {
@@ -48,13 +54,39 @@ public class OlmTextGeneral extends JTextField implements KeyListener, FocusList
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                textValid = (getText().length() <= 0);
+                textValid = (getPassword().length <= 0);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
             }
         });
+    }
+
+    public String getErrors() {
+        setForeground(OlmColors.getTextoGeneral());
+        setBorder(new LineBorder(OlmColors.getBordeTexto()));
+
+        Matcher mat = patternPassword.matcher(getText());
+        if (!mat.find()) {
+            setForeground(OlmColors.getAlert3Dark(230));
+            setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
+            return String.format(alertTextWhenPatternError, getName());
+        }
+
+        if (getPassword().length < minTextLength) {
+            setForeground(OlmColors.getAlert3Dark(230));
+            setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
+            return String.format(alertTextWhenMinTextLengthError, getName(), minTextLength);
+        }
+
+        if (getPassword().length > maxTextLength) {
+            setForeground(OlmColors.getAlert3Dark(230));
+            setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
+            return String.format(alertTextWhenMaxTextLengthError, getName(), minTextLength);
+        }
+
+        return null;
     }
 
     public void setPlaceholder(String placeholder) {
@@ -65,61 +97,16 @@ public class OlmTextGeneral extends JTextField implements KeyListener, FocusList
         return placeholder;
     }
 
-    public void setInvalid() {
-        setForeground(OlmColors.getAlert3Dark(230));
-        setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
-        selectAll();
-        requestFocus();
-    }
-
-//    public boolean evaluarValidez() {
-//        
-//    }
-    public boolean isAutoSelectOnFocus() {
-        return autoSelectOnFocus;
-    }
-
-    public void setAutoSelectOnFocus(boolean autoSelectOnFocus) {
-        this.autoSelectOnFocus = autoSelectOnFocus;
-    }
-
-    public String getErrors() {
-        setForeground(OlmColors.getTextoGeneral());
-        setBorder(new LineBorder(OlmColors.getBordeTexto()));
-
-        if (minTextLength == maxTextLength && getText().trim().length() != maxTextLength) {
-            setForeground(OlmColors.getAlert3Dark(230));
-            setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
-            return "Ingrese " + minTextLength + " caracteres en el campo: " + getName() + ".";
-        }
-
-        if (getText().trim().length() < minTextLength) {
-            setForeground(OlmColors.getAlert3Dark(230));
-            setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
-            return "Ingrese por lo menos " + minTextLength + " caracteres en el campo: " + getName() + ".";
-        }
-
-        if (getText().trim().length() > maxTextLength) {
-            setForeground(OlmColors.getAlert3Dark(230));
-            setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
-            return "Ingrese como máximo " + maxTextLength + " caracteres en el campo: " + getName() + ".";
-        }
-
-        return null;
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(new Color(0, 0, 0, 90));
+        g.setColor(new Color(230, 230, 230, 90));
         g.drawString((textValid) ? placeholder : "", getMargin().left, (getSize().height) / 2 + getFont().getSize() / 2);
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (getText().length() >= maxTextLength) {
-            e.consume();
-        }
+
     }
 
     @Override
@@ -142,18 +129,16 @@ public class OlmTextGeneral extends JTextField implements KeyListener, FocusList
     @Override
     public void focusLost(FocusEvent e) {
         getErrors();
-        if (getText().length() > maxTextLength) {
-            setText(getText().substring(0, maxTextLength));
-        }
     }
 
-//    public boolean isValidateEmpty() {
-//        return validateEmpty;
-//    }
-//
-//    public void setValidateEmpty(boolean validateEmpty) {
-//        this.validateEmpty = validateEmpty;
-//    }
+    public boolean isAutoSelectOnFocus() {
+        return autoSelectOnFocus;
+    }
+
+    public void setAutoSelectOnFocus(boolean autoSelectOnFocus) {
+        this.autoSelectOnFocus = autoSelectOnFocus;
+    }
+
     public int getMinTextLength() {
         return minTextLength;
     }
@@ -170,9 +155,36 @@ public class OlmTextGeneral extends JTextField implements KeyListener, FocusList
         this.maxTextLength = maxTextLength;
     }
 
-    public void setTextLenght(int textLength) {
-        maxTextLength = textLength;
-        minTextLength = textLength;
+    public Pattern getPatternPassword() {
+        return patternPassword;
+    }
+
+    public void setPatternPassword(Pattern patternPassword) {
+        this.patternPassword = patternPassword;
+    }
+
+    public String getAlertTextWhenPatternError() {
+        return alertTextWhenPatternError;
+    }
+
+    public void setAlertTextWhenPatternError(String alertTextWhenPatternError) {
+        this.alertTextWhenPatternError = alertTextWhenPatternError;
+    }
+
+    public String getAlertTextWhenMinTextLengthError() {
+        return alertTextWhenMinTextLengthError;
+    }
+
+    public void setAlertTextWhenMinTextLengthError(String alertTextWhenMinTextLengthError) {
+        this.alertTextWhenMinTextLengthError = alertTextWhenMinTextLengthError;
+    }
+
+    public String getAlertTextWhenMaxTextLengthError() {
+        return alertTextWhenMaxTextLengthError;
+    }
+
+    public void setAlertTextWhenMaxTextLengthError(String alertTextWhenMaxTextLengthError) {
+        this.alertTextWhenMaxTextLengthError = alertTextWhenMaxTextLengthError;
     }
 
 }

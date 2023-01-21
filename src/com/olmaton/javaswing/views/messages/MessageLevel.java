@@ -1,9 +1,9 @@
-package com.olmaton.javaswing.services;
+package com.olmaton.javaswing.views.messages;
 
 public enum MessageLevel {
-    EXITO(0, "Mensaje"),
-    MENSAJE(1, "Mensaje"),
-    WARNING(2, "Advertencia"),
+    MESSAGE(0, "Message"),
+    INFO(1, "Information"),
+    WARNING(2, "Warning"),
     ERROR(2, "Error");
 
     private final int level;

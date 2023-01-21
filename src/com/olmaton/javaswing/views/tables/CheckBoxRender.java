@@ -1,4 +1,4 @@
-package com.olmaton.javaswing.views.utils.tables;
+package com.olmaton.javaswing.views.tables;
 
 import java.awt.*;
 import javax.swing.*;

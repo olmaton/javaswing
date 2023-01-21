@@ -1,6 +1,7 @@
-package com.olmaton.javaswing.views.utils.tables;
+package com.olmaton.javaswing.views.tables;
 
 import com.olmaton.javaswing.views.utils.OlmImages;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
@@ -59,10 +60,18 @@ public class OlmCustomJTable {
         return addButton(idx, icon, icon);
     }
 
+    public JButton addButton(int idx, ImageIcon icon) {
+        return addButton(idx, icon, null);
+    }
+
     public JButton addButton(int idx, String icon, String presedIcon) {
-        ButtonEditor buttonEditor = new ButtonEditor(new JCheckBox(), OlmImages.getImageIcon(icon), OlmImages.getImageIcon(presedIcon));
+        return addButton(idx, OlmImages.getImageIcon(icon), OlmImages.getImageIcon(presedIcon));
+    }
+
+    public JButton addButton(int idx, ImageIcon icon, ImageIcon presedIcon) {
+        ButtonEditor buttonEditor = new ButtonEditor(new JCheckBox(), icon, presedIcon);
         table.getColumnModel().getColumn(idx).setCellEditor(buttonEditor);
-        table.getColumnModel().getColumn(idx).setCellRenderer(new ButtonRender(OlmImages.getImageIcon(icon)));
+        table.getColumnModel().getColumn(idx).setCellRenderer(new ButtonRender(icon));
         return buttonEditor.button;
     }
 

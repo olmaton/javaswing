@@ -1,4 +1,4 @@
-package com.olmaton.javaswing.views.controls;
+package com.olmaton.javaswing.views.textcontrols;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -6,7 +6,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.JPasswordField;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -17,25 +19,27 @@ import java.awt.Color;
  *
  * @author olmaton
  */
-public class OlmTextPassword extends JPasswordField implements KeyListener, FocusListener {
+public class OlmTextEmail extends JTextField implements KeyListener, FocusListener {
 
     private final Dimension dimension = new Dimension(150, 30);
     private String placeholder = "";
     private boolean textValid = true;
+    Pattern patternEmail = Pattern.compile("^[\\w-]+(\\.[\\w-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     private boolean autoSelectOnFocus = true;
-    private int minTextLength = 0;
-    private int maxTextLength = 999999999;
 
-    public OlmTextPassword() {
+    private String alertTextWhenEmailError = "%s not containt email valid.";
+
+    public OlmTextEmail() {
         super();
+        setName("OlmTextEmail");
         setSize(dimension);
         setText("");
         setPreferredSize(dimension);
         setMinimumSize(dimension);
         setMaximumSize(dimension);
         setVisible(true);
-        addKeyListener(OlmTextPassword.this);
-        addFocusListener(OlmTextPassword.this);
+        addKeyListener(OlmTextEmail.this);
+        addFocusListener(OlmTextEmail.this);
         setForeground(OlmColors.getTextoGeneral());
         setBorder(new LineBorder(OlmColors.getBordeTexto()));
         getDocument().addDocumentListener(new DocumentListener() {
@@ -46,32 +50,13 @@ public class OlmTextPassword extends JPasswordField implements KeyListener, Focu
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                textValid = (getPassword().length <= 0);
+                textValid = (getText().length() <= 0);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
             }
         });
-    }
-
-    public String getErrors() {
-        setForeground(OlmColors.getTextoGeneral());
-        setBorder(new LineBorder(OlmColors.getBordeTexto()));
-
-        if (getPassword().length < minTextLength) {
-            setForeground(OlmColors.getAlert3Dark(230));
-            setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
-            return "Ingrese por lo menos " + minTextLength + " caracteres en el campo "+getName()+".";
-        }
-
-        if (getPassword().length > maxTextLength) {
-            setForeground(OlmColors.getAlert3Dark(230));
-            setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
-            return "Ingrese como máximo " + maxTextLength + " caracteres en el campo "+getName()+".";
-        }
-
-        return null;
     }
 
     public void setPlaceholder(String placeholder) {
@@ -82,10 +67,22 @@ public class OlmTextPassword extends JPasswordField implements KeyListener, Focu
         return placeholder;
     }
 
+    public String getErrors() {
+        setForeground(OlmColors.getTextoGeneral());
+        setBorder(new LineBorder(OlmColors.getBordeTexto()));
+        Matcher mat = patternEmail.matcher(getText());
+        if (!mat.find()) {
+            setForeground(OlmColors.getAlert3Dark(230));
+            setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
+            return String.format(alertTextWhenEmailError, getName());
+        }
+        return null;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(new Color(230, 230, 230, 90));
+        g.setColor(new Color(0, 0, 0, 90));
         g.drawString((textValid) ? placeholder : "", getMargin().left, (getSize().height) / 2 + getFont().getSize() / 2);
     }
 
@@ -124,20 +121,20 @@ public class OlmTextPassword extends JPasswordField implements KeyListener, Focu
         this.autoSelectOnFocus = autoSelectOnFocus;
     }
 
-    public int getMinTextLength() {
-        return minTextLength;
+    public Pattern getPatternEmail() {
+        return patternEmail;
     }
 
-    public void setMinTextLength(int minTextLength) {
-        this.minTextLength = minTextLength;
+    public void setPatternEmail(Pattern patternEmail) {
+        this.patternEmail = patternEmail;
     }
 
-    public int getMaxTextLength() {
-        return maxTextLength;
+    public String getAlertTextWhenEmailError() {
+        return alertTextWhenEmailError;
     }
 
-    public void setMaxTextLength(int maxTextLength) {
-        this.maxTextLength = maxTextLength;
+    public void setAlertTextWhenEmailError(String alertTextWhenEmailError) {
+        this.alertTextWhenEmailError = alertTextWhenEmailError;
     }
 
 }

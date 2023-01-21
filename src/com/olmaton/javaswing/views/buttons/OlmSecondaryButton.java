@@ -1,4 +1,4 @@
-package com.olmaton.javaswing.views.controls;
+package com.olmaton.javaswing.views.buttons;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -12,65 +12,32 @@ import java.awt.font.TextAttribute;
 import java.util.Map;
 import javax.swing.JButton;
 
-public class OlmPrimaryButton extends JButton implements MouseListener, FocusListener {
+/**
+ *
+ * @author olmaton
+ */
+public class OlmSecondaryButton extends JButton implements MouseListener, FocusListener {
 
     private final Dimension dimension = new Dimension(150, 34);
-    private Color olmBackgroundColor = new Color(65, 126, 187);
-    private Color olmBackgroundEnteredColor = new Color(93, 164, 236);
-    private Color olmForegroundColor = Color.WHITE;
-    private Color olmForegroundEnteredColor = Color.WHITE;
+    private final Color olmBackgroundColor = new Color(230, 230, 230);
+    private final Color olmBackgroundEnteredColor = new Color(210, 210, 210);
+    private final Color olmForegroundColor = Color.DARK_GRAY;
+    private final Color olmForegroundEnteredColor = Color.BLACK;
 
-    public OlmPrimaryButton() {
+    public OlmSecondaryButton() {
         super();
-        super.setBackground(olmBackgroundColor);
-        setForeground(olmForegroundColor);        
+        setForeground(olmForegroundColor);
+        setBackground(olmBackgroundColor);
         setFocusPainted(false);
         setBorderPainted(false);
-        setText("Olm Primary Button");
         setSize(dimension);
+        setText("Olm Secondary Button");
         setPreferredSize(dimension);
         setMinimumSize(dimension);
         setMaximumSize(dimension);
         setVisible(true);
-        addMouseListener(OlmPrimaryButton.this);
-        addFocusListener(OlmPrimaryButton.this);
-    }
-
-    public Color getOlmBackgroundColor() {
-        return olmBackgroundColor;
-    }
-
-    public void setOlmBackgroundColor(Color olmBackgroundColor) {
-        this.olmBackgroundColor = olmBackgroundColor;
-    }
-
-    public Color getOlmBackgroundEnteredColor() {
-        return olmBackgroundEnteredColor;
-    }
-
-    public void setOlmBackgroundEnteredColor(Color olmBackgroundEnteredColor) {
-        this.olmBackgroundEnteredColor = olmBackgroundEnteredColor;
-    }
-
-    public Color getOlmForegroundColor() {
-        return olmForegroundColor;
-    }
-
-    public void setOlmForegroundColor(Color olmForegroundColor) {
-        this.olmForegroundColor = olmForegroundColor;
-    }
-
-    public Color getOlmForegroundEnteredColor() {
-        return olmForegroundEnteredColor;
-    }
-
-    public void setOlmForegroundEnteredColor(Color olmForegroundEnteredColor) {
-        this.olmForegroundEnteredColor = olmForegroundEnteredColor;
-    }
-
-    @Override
-    public void setBackground(Color background) {
-        super.setBackground(background);
+        addMouseListener(OlmSecondaryButton.this);
+        addFocusListener(OlmSecondaryButton.this);
     }
 
     @Override

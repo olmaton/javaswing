@@ -125,7 +125,7 @@
             <Property name="horizontalTextPosition" type="int" value="10"/>
           </Properties>
         </Component>
-        <Component class="com.olmaton.javaswing.views.controls.OlmPrimaryButton" name="btnAceptar">
+        <Component class="com.olmaton.javaswing.views.buttons.OlmPrimaryButton" name="btnAceptar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Aceptar"/>
           </Properties>

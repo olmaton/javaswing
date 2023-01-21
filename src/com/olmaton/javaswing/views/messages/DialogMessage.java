@@ -1,6 +1,5 @@
 package com.olmaton.javaswing.views.messages;
 
-import com.olmaton.javaswing.services.MessageLevel;
 import java.awt.Frame;
 import com.olmaton.javaswing.views.utils.OlmColors;
 import java.awt.Color;
@@ -23,25 +22,23 @@ public class DialogMessage {
 
     }
 
-    public void setMessage(Component component, MessageLevel level, String message, String origin) {
+    public void setMessage(Component component, MessageLevel level, String message, String subMessage) {
         Frame parent = (JFrame) SwingUtilities.getWindowAncestor(component);
         if (component instanceof Frame) {
             parent = (Frame) component;
         }
         switch (level) {
-            case EXITO: {
-                //Mensaje OK
+            case MESSAGE: {
                 JdiMessage jdiMessage = new JdiMessage(parent);
-                jdiMessage.setLabelTitle("Mensaje", message, origin, OlmColors.getAlert0(), OlmColors.getAlert0Dark());
+                jdiMessage.setLabelTitle(level.toString(), message, subMessage, OlmColors.getAlert0(), OlmColors.getAlert0Dark());
                 jdiMessage.setLocationRelativeTo(component);
                 jdiMessage.setVisible(true);
                 break;
             }
 
-            case MENSAJE: {
-                //Mensaje informativo
+            case INFO: {
                 JdiMessage jdiMessage = new JdiMessage(parent);
-                jdiMessage.setLabelTitle("Mensaje", message, origin, OlmColors.getAlert1(), OlmColors.getAlert1Dark());
+                jdiMessage.setLabelTitle(level.toString(), message, subMessage, OlmColors.getAlert1(), OlmColors.getAlert1Dark());
                 jdiMessage.setLocationRelativeTo(component);
                 jdiMessage.setVisible(true);
                 break;
@@ -50,16 +47,15 @@ public class DialogMessage {
             case WARNING: {
                 //Mensaje de alerta
                 JdiMessage jdiMessage = new JdiMessage(parent);
-                jdiMessage.setLabelTitle("Alerta", message, origin, OlmColors.getAlert2(), OlmColors.getAlert2Dark());
+                jdiMessage.setLabelTitle(level.toString(), message, subMessage, OlmColors.getAlert2(), OlmColors.getAlert2Dark());
                 jdiMessage.setLocationRelativeTo(component);
                 jdiMessage.setVisible(true);
                 break;
             }
 
             case ERROR: {
-                //Mensaje de error
                 JdiMessage jdiMessage = new JdiMessage(parent);
-                jdiMessage.setLabelTitle("Error", message, origin, OlmColors.getAlert3(), OlmColors.getAlert3Dark());
+                jdiMessage.setLabelTitle(level.toString(), message, subMessage, OlmColors.getAlert3(), OlmColors.getAlert3Dark());
                 jdiMessage.setLocationRelativeTo(component);
                 jdiMessage.setVisible(true);
                 break;
@@ -67,7 +63,7 @@ public class DialogMessage {
 
             default: {
                 JdiMessage jdiMessage = new JdiMessage(parent);
-                jdiMessage.setLabelTitle("Mensaje", message, origin, OlmColors.getAlert1(), OlmColors.getAlert1Dark());
+                jdiMessage.setLabelTitle(level.toString(), message, subMessage, OlmColors.getAlert1(), OlmColors.getAlert1Dark());
                 jdiMessage.setLocationRelativeTo(component);
                 jdiMessage.setVisible(true);
             }
@@ -80,7 +76,7 @@ public class DialogMessage {
             parent = (Frame) component;
         }
         JdiMessageConfirm jdiMessageConfirmar = new JdiMessageConfirm(parent);
-        jdiMessageConfirmar.setLabelTitle("Confirme", mensaje, new Color(93, 164, 236));
+        jdiMessageConfirmar.setLabelTitle("Confirm", mensaje, new Color(93, 164, 236));
         jdiMessageConfirmar.setLocationRelativeTo(component);
         jdiMessageConfirmar.setVisible(true);
         return jdiMessageConfirmar.isConfirmado();

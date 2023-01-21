@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.olmaton.javaswing.views.messages;
 
 import java.awt.Color;
@@ -16,16 +11,16 @@ public class JdiMessage extends javax.swing.JDialog {
     public JdiMessage(java.awt.Frame parent) {
         super(parent, true);
         initComponents();
-        this.setLocationRelativeTo(this);        
+        this.setLocationRelativeTo(this);
 
     }
 
-    public void setLabelTitle(String title, String message, String origen, Color color, Color colorDark) {
+    public void setLabelTitle(String title, String message, String subMessage, Color color, Color colorDark) {
         lblTitle.setText(title);
-        if (origen == null || origen.trim().isEmpty()) {
+        if (subMessage == null || subMessage.trim().isEmpty()) {
             lblMessage.setText("<html><h2>" + message + "</h2></html>");
         } else {
-            lblMessage.setText("<html><h2>" + message + "</h2><h4>" + origen + "</h4></html>");
+            lblMessage.setText("<html><h2>" + message + "</h2><h4>" + subMessage + "</h4></html>");
         }
 
         pnlColor.setBackground(color);
@@ -42,7 +37,7 @@ public class JdiMessage extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
         lblMessage = new javax.swing.JLabel();
-        btnAceptar = new com.olmaton.javaswing.views.controls.OlmPrimaryButton();
+        btnAceptar = new com.olmaton.javaswing.views.buttons.OlmPrimaryButton();
         pnlColor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -139,7 +134,7 @@ public class JdiMessage extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.olmaton.javaswing.views.controls.OlmPrimaryButton btnAceptar;
+    private com.olmaton.javaswing.views.buttons.OlmPrimaryButton btnAceptar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblMessage;

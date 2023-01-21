@@ -1,4 +1,4 @@
-package com.olmaton.javaswing.views.controls;
+package com.olmaton.javaswing.views.textcontrols;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,40 +12,37 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import com.olmaton.javaswing.views.utils.OlmColors;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 /**
  *
  * @author olmaton
  */
-public class OlmTextDecimal extends JTextField implements KeyListener, FocusListener {
+public class OlmTextInteger extends JTextField implements KeyListener, FocusListener {
 
     private final Dimension dimension = new Dimension(150, 30);
     private final Color placeholderColor = Color.BLACK;
-    private String placeholder = "#0.00";
+    private String placeholder = "#0000";
     private boolean textValid = true;
-    private String pattern = "#0.00";
-    private DecimalFormat numberFormat;
-    private Locale customLocale = new Locale("en", "US");
     private boolean autoSelectOnFocus = true;
     private boolean nullValid = true;
     private int minValue = -999999999;
     private int maxValue = 999999999;
 
-    public OlmTextDecimal() {
+    private String alertTextWhenIsRequiredError = "%s is required.";
+    private String alertTextWhenIsRequiredMinValueError = "%s is required with min value %s.";
+    private String alertTextWhenIsRequiredMaxValueError = "%s is required with max value %s.";
+
+    public OlmTextInteger() {
         super();
-        numberFormat = (DecimalFormat) NumberFormat.getNumberInstance(customLocale);
-        numberFormat.applyLocalizedPattern(pattern);
+        setName("OlmTextInteger");
         setSize(dimension);
         setText("");
         setPreferredSize(dimension);
         setMinimumSize(dimension);
         setMaximumSize(dimension);
         setVisible(true);
-        addKeyListener(OlmTextDecimal.this);
-        addFocusListener(OlmTextDecimal.this);
+        addKeyListener(OlmTextInteger.this);
+        addFocusListener(OlmTextInteger.this);
         setForeground(OlmColors.getTextoGeneral());
         setBorder(new LineBorder(OlmColors.getBordeTexto()));
         getDocument().addDocumentListener(new DocumentListener() {
@@ -65,37 +62,6 @@ public class OlmTextDecimal extends JTextField implements KeyListener, FocusList
         });
     }
 
-    public void setNumberValue(Double value) {
-        if (value == null) {
-            if (nullValid) {
-                setText("");
-            } else {
-                setText(numberFormat.format(0.0));
-            }
-        } else {
-            setText(numberFormat.format(value));
-        }
-    }
-
-    public Double getNumberValue() {
-        if (getText().trim().isEmpty()) {
-            if (nullValid) {
-                return null;
-            }
-            return 0.0;
-        }
-
-        return Double.valueOf(getText().trim());
-    }
-
-    public void setPlaceholder(String placeholder) {
-        this.placeholder = placeholder;
-    }
-
-    public String getPlaceholder() {
-        return placeholder;
-    }
-
     public void setInvalid() {
         setForeground(OlmColors.getAlert3Dark(230));
         setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
@@ -106,26 +72,49 @@ public class OlmTextDecimal extends JTextField implements KeyListener, FocusList
     public String getErrors() {
         setForeground(OlmColors.getTextoGeneral());
         setBorder(new LineBorder(OlmColors.getBordeTexto()));
-        Double value = getNumberValue();
+        Integer value = getNumberValue();
         if (!nullValid && value == null) {
             setForeground(OlmColors.getAlert3Dark(230));
             setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
-            return "Ingrese un número en el campo: " + getName() + ".";
+            return String.format(alertTextWhenIsRequiredError, getName());
         }
 
         if (value != null && value < minValue) {
             setForeground(OlmColors.getAlert3Dark(230));
             setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
-            return "Ingrese un número mayor que " + minValue + " en el campo: " + getName() + ".";
+            return String.format(alertTextWhenIsRequiredMinValueError, getName(), minValue);
         }
 
         if (value != null && value > maxValue) {
             setForeground(OlmColors.getAlert3Dark(230));
             setBorder(new LineBorder(OlmColors.getAlert3Dark(230)));
-            return "Ingrese un número menor que: " + maxValue + " en el campo: " + getName() + ".";
+            return String.format(alertTextWhenIsRequiredMaxValueError, getName(), minValue);
         }
 
         return null;
+    }
+
+    public void setNumberValue(Integer value) {
+        if (value == null) {
+            if (nullValid) {
+                setText("");
+            } else {
+                setText(String.valueOf(0));
+            }
+        } else {
+            setText(String.valueOf(value));
+        }
+    }
+
+    public Integer getNumberValue() {
+        if (getText().trim().isEmpty()) {
+            if (nullValid) {
+                return null;
+            }
+            return 0;
+        }
+
+        return Integer.valueOf(getText().trim());
     }
 
     @Override
@@ -137,9 +126,7 @@ public class OlmTextDecimal extends JTextField implements KeyListener, FocusList
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (!Character.isDigit(e.getKeyChar()) && e.getKeyChar() != '.') {
-            e.consume();
-        } else if (e.getKeyChar() == '.' && getText().contains(".")) {
+        if (!Character.isDigit(e.getKeyChar())) {
             e.consume();
         }
     }
@@ -162,8 +149,14 @@ public class OlmTextDecimal extends JTextField implements KeyListener, FocusList
 
     @Override
     public void focusLost(FocusEvent e) {
-        setNumberValue(getNumberValue());
-        getErrors();
+    }
+
+    public void setPlaceholder(String placeholder) {
+        this.placeholder = placeholder;
+    }
+
+    public String getPlaceholder() {
+        return placeholder;
     }
 
     public boolean isAutoSelectOnFocus() {
@@ -172,27 +165,6 @@ public class OlmTextDecimal extends JTextField implements KeyListener, FocusList
 
     public void setAutoSelectOnFocus(boolean autoSelectOnFocus) {
         this.autoSelectOnFocus = autoSelectOnFocus;
-    }
-
-    public String getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(String pattern) {
-        numberFormat = (DecimalFormat) NumberFormat.getNumberInstance(customLocale);
-        numberFormat.applyLocalizedPattern(pattern);
-        this.pattern = pattern;
-        placeholder = pattern;
-    }
-
-    public Locale getCustomLocale() {
-        return customLocale;
-    }
-
-    public void setCustomLocale(Locale customLocale) {
-        numberFormat = (DecimalFormat) NumberFormat.getNumberInstance(customLocale);
-        numberFormat.applyLocalizedPattern(pattern);
-        this.customLocale = customLocale;
     }
 
     public boolean isNullValid() {
@@ -218,4 +190,29 @@ public class OlmTextDecimal extends JTextField implements KeyListener, FocusList
     public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
     }
+
+    public String getAlertTextWhenIsRequiredError() {
+        return alertTextWhenIsRequiredError;
+    }
+
+    public void setAlertTextWhenIsRequiredError(String alertTextWhenIsRequiredError) {
+        this.alertTextWhenIsRequiredError = alertTextWhenIsRequiredError;
+    }
+
+    public String getAlertTextWhenIsRequiredMinValueError() {
+        return alertTextWhenIsRequiredMinValueError;
+    }
+
+    public void setAlertTextWhenIsRequiredMinValueError(String alertTextWhenIsRequiredMinValueError) {
+        this.alertTextWhenIsRequiredMinValueError = alertTextWhenIsRequiredMinValueError;
+    }
+
+    public String getAlertTextWhenIsRequiredMaxValueError() {
+        return alertTextWhenIsRequiredMaxValueError;
+    }
+
+    public void setAlertTextWhenIsRequiredMaxValueError(String alertTextWhenIsRequiredMaxValueError) {
+        this.alertTextWhenIsRequiredMaxValueError = alertTextWhenIsRequiredMaxValueError;
+    }
+
 }

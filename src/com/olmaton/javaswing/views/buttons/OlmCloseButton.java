@@ -1,4 +1,4 @@
-package com.olmaton.javaswing.views.controls;
+package com.olmaton.javaswing.views.buttons;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -16,28 +16,30 @@ import javax.swing.JButton;
  *
  * @author olmaton
  */
-public class OlmSecondaryButton extends JButton implements MouseListener, FocusListener {
+public class OlmCloseButton extends JButton implements MouseListener, FocusListener {
 
-    private final Dimension dimension = new Dimension(150, 34);
+    private final Dimension dimension = new Dimension(42, 34);
     private final Color olmBackgroundColor = new Color(230, 230, 230);
     private final Color olmBackgroundEnteredColor = new Color(210, 210, 210);
-    private final Color olmForegroundColor = Color.DARK_GRAY;
+    private final Color olmForegroundColor = Color.GRAY;
     private final Color olmForegroundEnteredColor = Color.BLACK;
+    
 
-    public OlmSecondaryButton() {
+    public OlmCloseButton() {
         super();
         setForeground(olmForegroundColor);
         setBackground(olmBackgroundColor);
         setFocusPainted(false);
         setBorderPainted(false);
         setSize(dimension);
-        setText("Olm Secondary Button");
+        setText("X");
         setPreferredSize(dimension);
         setMinimumSize(dimension);
         setMaximumSize(dimension);
         setVisible(true);
-        addMouseListener(OlmSecondaryButton.this);
-        addFocusListener(OlmSecondaryButton.this);
+        setFocusable(false);
+        addMouseListener(OlmCloseButton.this);
+        addFocusListener(OlmCloseButton.this);
     }
 
     @Override

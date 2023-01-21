@@ -75,16 +75,4 @@ public class OlmColors {
     public static Color getBordeTexto() {
         return new Color(BORDE_TEXTO[0], BORDE_TEXTO[1], BORDE_TEXTO[2]);
     }
-
-//    public static Color getGray() {
-//        return new Color(GREY[0], GREY[1], GREY[2]);
-//    }
-//
-//    public static Color getGrayWithOpacity(int opacity) {
-//        return new Color(GREY[0], GREY[1], GREY[2], opacity);
-//    }
-//
-//    public static Color getGrayDark() {
-//        return new Color(GREY_DARK[0], GREY_DARK[1], GREY_DARK[2]);
-//    }
 }

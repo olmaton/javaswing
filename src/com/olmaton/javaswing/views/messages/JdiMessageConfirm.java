@@ -39,8 +39,8 @@ public class JdiMessageConfirm extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
         lblMessage = new javax.swing.JLabel();
-        olmPrimaryButton1 = new com.olmaton.javaswing.views.controls.OlmPrimaryButton();
-        olmSecondaryButton1 = new com.olmaton.javaswing.views.controls.OlmSecondaryButton();
+        olmPrimaryButton1 = new com.olmaton.javaswing.views.buttons.OlmPrimaryButton();
+        olmSecondaryButton1 = new com.olmaton.javaswing.views.buttons.OlmSecondaryButton();
         pnlColor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -157,8 +157,8 @@ public class JdiMessageConfirm extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblMessage;
     private javax.swing.JLabel lblTitle;
-    private com.olmaton.javaswing.views.controls.OlmPrimaryButton olmPrimaryButton1;
-    private com.olmaton.javaswing.views.controls.OlmSecondaryButton olmSecondaryButton1;
+    private com.olmaton.javaswing.views.buttons.OlmPrimaryButton olmPrimaryButton1;
+    private com.olmaton.javaswing.views.buttons.OlmSecondaryButton olmSecondaryButton1;
     private javax.swing.JPanel pnlColor;
     // End of variables declaration//GEN-END:variables
 }
