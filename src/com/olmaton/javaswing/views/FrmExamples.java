@@ -131,7 +131,7 @@ public class FrmExamples extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Buttons"));
 
-        jLabel1.setText("Closse button");
+        jLabel1.setText("Close button");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
